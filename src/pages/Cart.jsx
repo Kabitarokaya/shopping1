@@ -8,10 +8,10 @@ import { GiShoppingBag } from 'react-icons/gi'
 import { useUser } from '@clerk/clerk-react'
 import { useNavigate } from 'react-router-dom'
 import emptyCart from '../assets/empty-cart.png'
-const Cart = (location, getLocation) => {
-  const { cartItem, updateQuantity,deleteItem } = useCart()
+const Cart = ({ location, getLocation }) => {
+  const { cartItem, updateQuantity, deleteItem } = useCart()
   const totalPrice = cartItem.reduce((total, item) => total + item.price, 0)
-const navigate = useNavigate()
+  const navigate = useNavigate()
   const { user } = useUser()
   return (
     <>
@@ -33,11 +33,11 @@ const navigate = useNavigate()
 
                       </div>
                       <div className="bg-red-700 text-white flex gap-4 p-2 rounded-md font-bold text-2xl ">
-                        <button onClick={()=>updateQuantity(cartItem,item.id, "decrease" )} className="cursor-pointer"><FiMinus /></button>
+                        <button onClick={() => updateQuantity(cartItem, item.id, "decrease")} className="cursor-pointer"><FiMinus /></button>
                         <span>{item.quantity}</span>
-                        <button onClick={()=>updateQuantity(cartItem, item.id, "increase")} className="cursor-pointer"><FiPlus /></button>
+                        <button onClick={() => updateQuantity(cartItem, item.id, "increase")} className="cursor-pointer"><FiPlus /></button>
                       </div>
-                      <span onClick={()=>deleteItem(item.id)} className='hover:bg-white/60 transition-all rounded-full p-3 hover:shadow-2xl'>
+                      <span onClick={() => deleteItem(item.id)} className='hover:bg-white/60 transition-all rounded-full p-3 hover:shadow-2xl'>
                         <FaRegTrashAlt className='text-red-500 text-2xl cursor-pointer' />
                       </span>
 
@@ -51,7 +51,7 @@ const navigate = useNavigate()
                     </h1>
                     <div className="flex flex-col space-y-1">
                       <label htmlFor="">Full Name</label>
-                      <input type="text" placeholder='Enter Your Name' className='p-2 rounded-md ' value={user.fullName} />
+                      <input type="text" placeholder='Enter Your Name' className='p-2 rounded-md 'value={user?.fullName || ""} />
                     </div>
                     <div className="flex flex-col space-y-1">
                       <label htmlFor="">Address</label>
@@ -63,24 +63,24 @@ const navigate = useNavigate()
                         <label htmlFor="">State</label>
                         <input type="text" placeholder='Enter Your State.' className='p-2 rounded-md w-full' value={location?.state} />
                       </div>
-                        <div className="flex flex-col space-y-1 w-full">
+                      <div className="flex flex-col space-y-1 w-full">
                         <label htmlFor="">PostCode</label>
                         <input type="text" placeholder='Enter Your PostCode.' className='p-2 rounded-md w-full' value={location?.postcode} />
                       </div>
                     </div>
                     <div className="flex w-full gap-5">
-                    
-                          <div className="flex flex-col space-y-1 w-full">
+
+                      <div className="flex flex-col space-y-1 w-full">
                         <label htmlFor="">Country</label>
                         <input type="text" placeholder='Enter Your Country.' className='p-2 rounded-md w-full' value={location?.country} />
                       </div>
-                        <div className="flex flex-col space-y-1 w-full">
+                      <div className="flex flex-col space-y-1 w-full">
                         <label htmlFor="">Phone Number</label>
                         <input type="number" placeholder='Enter Your Phone Number.' className='p-2 rounded-md w-full' />
                       </div>
                     </div>
-                   
-                
+
+
                     <button type='submit' className='bg-gradient-to-t from-blue-500 to-pink-500 mt-5 rounded-md py-1 px-4 cursor-pointer text-white'>Submit</button>
 
                     <div className="flex items-center justify-center w-full text-gray-700">
@@ -133,10 +133,10 @@ const navigate = useNavigate()
               </div>
             </div> :
               <div className='flex flex-col gap-4 justify-center items-center h-[600px]'>
- <h1 className="text-red-600/80 font-bold text-5xl ">Oh no! Your Cart is empty.
- <img src={emptyCart} alt=""  className='w-[400px]'/>
- <button onClick={()=>navigate()} className="bg-red-600 text-white px-4 text-2xl  py-2 rounded-md cursor-pointer">Continue Shopping</button>
- </h1>
+                <h1 className="text-red-600/80 font-bold text-5xl ">Oh no! Your Cart is empty.
+                  <img src={emptyCart} alt="" className='w-[400px]' />
+                  <button onClick={() => navigate('/')} className="bg-red-600 text-white px-4 text-2xl  py-2 rounded-md cursor-pointer">Continue Shopping</button>
+                </h1>
               </div>
 
           }
